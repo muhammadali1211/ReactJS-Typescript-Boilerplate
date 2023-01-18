@@ -1,7 +1,6 @@
 import React from 'react'
 import { Col, Row, Container, Card } from 'react-bootstrap'
-import { useHistory } from 'react-router-dom'
-import { Form, Formik, FormikProvider, useFormik } from 'formik'
+import { Form,  FormikProvider, useFormik } from 'formik'
 import * as Yup from 'yup'
 import { store } from '../../../store'
 import { registerRequest } from '../redux/actions'
@@ -9,8 +8,7 @@ interface FuncProp {
   formik?: any
   onClick?: any
 }
-const Signup: React.FC<FuncProp> = () => {
-  const history = useHistory()
+const Signup: React.FC<FuncProp> = () => {  
   const signupUserSchema = Yup.object({
     first_name: Yup.string()
       .required('Please enter the first name')

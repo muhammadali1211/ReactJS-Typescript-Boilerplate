@@ -1,5 +1,5 @@
 import axios from "../../../config/axios";
-import { all, put, call, fork, takeLatest, select } from 'redux-saga/effects'
+import { all, put, fork, takeLatest, select } from 'redux-saga/effects'
 import * as types from './constants'
 import { makeSelectAuthToken } from "../../../store/selectors";
 import { toast } from 'react-toastify'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 import SignupForm from '../pages/Auth/Signup/Signup'
 it('should have email and password and first_name and last_name field', () => {
