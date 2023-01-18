@@ -25,8 +25,7 @@ function* loginRequestSaga({
       toast.success(response.data.message)
       payload.history.push('/')
     } catch (error:any) {
-    //   yield put(loginRequestFailure())
-    //   yield sagaErrorHandler(error.response)
+  
     }
   }
   /**
@@ -59,8 +58,7 @@ function* loginRequestSaga({
       toast.success(response.data.message)
       payload.history.push('/signin')
     } catch (error:any) {
-    //   yield put(registerRequestFailure())
-    //   yield sagaErrorHandler(error.response)
+
     }
   }
   function* watchLogin() {

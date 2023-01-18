@@ -1,13 +1,15 @@
 import React from 'react'
-import { Col, Button, Row, Container, Card } from 'react-bootstrap'
-import { Link, useHistory } from 'react-router-dom'
+import { Col, Row, Container, Card } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
 import { Form, Formik, FormikProvider, useFormik } from 'formik'
 import * as Yup from 'yup'
-import SignupForm from './SignupForm'
-import { useDispatch } from 'react-redux'
+import { store } from '../../../store'
 import { registerRequest } from '../redux/actions'
-const Signup = () => {
-  const dispatch = useDispatch()
+interface FuncProp {
+  formik?: any
+  onClick?: any
+}
+const Signup: React.FC<FuncProp> = () => {
   const history = useHistory()
   const signupUserSchema = Yup.object({
     first_name: Yup.string()
@@ -34,7 +36,7 @@ const Signup = () => {
     },
     validationSchema: signupUserSchema,
     onSubmit: async (values) => {
-      dispatch(
+      store?.dispatch(
         registerRequest({
           first_name: values.first_name,
           last_name: values.last_name,
@@ -46,7 +48,7 @@ const Signup = () => {
     },
   })
   return (
-    <div>
+    <>
       <Container>
         <Row className="vh-100 d-flex justify-content-center align-items-center">
           <Col md={8} lg={6} xs={12}>
@@ -56,12 +58,100 @@ const Signup = () => {
                 <div className="mb-3 mt-md-4">
                   <h2 className="fw-bold mb-2 text-uppercase ">Signup</h2>
                   <div className="mb-3">
-                    <SignupForm formik={formik} />
+                    <FormikProvider value={formik}>
+                      <Form onSubmit={formik.handleSubmit}>
+                        <div className="col-sm-12">
+                          <label htmlFor="firstname" className="">
+                            First Name
+                          </label>
+                          <input
+                            id="firstname"
+                            type="text"
+                            className="form-control input_color_login"
+                            name="first_name"
+                            placeholder="Enter the first name"
+                            value={formik.values && formik.values.first_name}
+                            onChange={formik.handleChange}
+                          />
+                          {formik.errors.first_name &&
+                            formik.touched.first_name && (
+                              <span className="text-danger letterspacing">
+                                {formik.errors.first_name}
+                              </span>
+                            )}
+                          <br />
+                          <label htmlFor="lastname" className="">
+                            Last Name
+                          </label>
+                          <input
+                            id="lastname"
+                            type="text"
+                            placeholder="Enter last name"
+                            className="form-control input_color_login"
+                            name="last_name"
+                            value={formik.values && formik.values.last_name}
+                            onChange={formik.handleChange}
+                          />
+                          {formik.errors.last_name &&
+                            formik.touched.last_name && (
+                              <span className="text-danger captchaErrors letterspacing">
+                                {formik.errors.last_name}
+                              </span>
+                            )}
+                          <br />
+                          <label htmlFor="email" className="">
+                            Email
+                          </label>
+                          <input
+                            id="email"
+                            type="text"
+                            name="email"
+                            placeholder="Enter the email"
+                            className="form-control input_color_login"
+                            value={formik.values && formik.values.email}
+                            onChange={formik.handleChange}
+                          />
+                          {formik.errors.email && formik.touched.email && (
+                            <span className="text-danger captchaErrors letterspacing">
+                              {formik.errors.email}
+                            </span>
+                          )}
+                          <br />
+                          <label htmlFor="password" className="">
+                            Password
+                          </label>
+                          <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            placeholder="Enter the password"
+                            className="form-control input_color_login"
+                            value={formik.values && formik.values.password}
+                            onChange={formik.handleChange}
+                          />
+                          {formik.errors.password &&
+                            formik.touched.password && (
+                              <span className="text-danger captchaErrors letterspacing">
+                                {formik.errors.password}
+                              </span>
+                            )}
+                          <div className="justify-content-center d-flex">
+                            <button
+                              className="text-center btn btn-primary pl-5 pr-5 rounded-pill mt-3"
+                              type="submit"
+                              onClick={() => formik.handleSubmit}
+                            >
+                              {' '}
+                              Submit{' '}
+                            </button>
+                          </div>
+                        </div>
+                      </Form>
+                    </FormikProvider>
 
                     <div className="mt-3">
                       <p className="mb-0  text-center">
-                        Already have an account?{' '}
-                        <Link to={'/login'}>Login</Link>
+                        Already have an account? <a href="/login">Login</a>
                       </p>
                     </div>
                   </div>
@@ -71,7 +161,7 @@ const Signup = () => {
           </Col>
         </Row>
       </Container>
-    </div>
+    </>
   )
 }
 
